@@ -1,0 +1,33 @@
+{
+  "name": "rpg",
+  "version": "0.0.1",
+  "description": "A text/graphics based rpg built with the MEAN stack and socketIO",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eluttrell/final-project.git"
+  },
+  "author": "Elijah E Allstrom-Luttrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eluttrell/final-project/issues"
+  },
+  "homepage": "https://github.com/eluttrell/final-project#readme",
+  "dependencies": {
+    "angular": "^1.5.9",
+    "angular-cookies": "^1.6.0",
+    "angular-ui-router": "^0.3.2",
+    "bcrypt": "^1.0.1",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.4",
+    "socket.io": "^1.7.2",
+    "uuid": "^3.0.1"
+  }
+}
