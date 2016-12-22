@@ -5,7 +5,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv').config();
+// const dotenv = require('dotenv').config();
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const mongoose = require('mongoose');
@@ -53,11 +53,7 @@ const characterSchema = new mongoose.Schema({
         race: String,
         size: String,
         gender: String,
-        age: Number {
-            abilityMod: Number,
-            proficiencyBonus: Number,
-            otherMod: Number
-        },
+        age: Number,
         height: Number,
         weight: Number,
         skin: String,
@@ -288,8 +284,9 @@ const characterSchema = new mongoose.Schema({
             properties: [String]
         }
     },
-    proficiencies: Object {
-        bonus: weapons: [String],
+    proficiencies: {
+        bonus: Number,
+        weapons: [String],
         tools: [String],
         languages: [String]
     },
@@ -311,18 +308,14 @@ const characterSchema = new mongoose.Schema({
         }
     },
     equipment: {
-      weapons: {
-        [
-          {
+      weapons: [{
             nameType: String,
             bonus: Number,
             damage: Number,
             type: String,
             range: Number,
             properties: [String]
-          }
-        ]
-      },
+          }],
       head: String,
       hands: String,
       eyes: String,
@@ -420,4 +413,10 @@ app.post('/newChar', function(req, res) {
   let userInfo = req.body;
 
 
+});
+
+
+
+app.listen(3000, function() {
+  console.log('listening on *:3000');
 });

@@ -1,0 +1,88 @@
+<h1>Character Generator</h1>
+
+<div class="container">
+    <form class="" method="post">
+
+        <!-- Character Name -->
+        <label for="">Name</label>
+        <input type="text" name="" placeholder="Character Name...">
+
+        <!-- Player Name -->
+        <label for="">Player</label>
+        <input type="text" name="" placeholder="Player Name...">
+
+        <!-- Age -->
+        <label for="">Age</label>
+        <input type="text" name="" value="">
+
+        <!-- Gender -->
+        <label for="">Gender</label>
+        <select class="gender-selector" name="">
+            <option value="Select">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="other">Other</option>
+          </select>
+
+        <!-- Height -->
+        <label for="">Height</label>
+        <input type="text" name="" value="">
+
+        <!-- Weight -->
+        <label for="">Weight</label>
+        <input type="text" name="" value="">
+
+        <!-- Race/Subrace -->
+        <label for="">Race/Subrace:</label>
+        <label>Race</label>
+        <select ng-model="selectedRace" ng-change="raceChanged()">
+              <option ng-repeat="race in races" value="{{race}}">{{race}}</option>
+            </select>
+        <span ng-show="subraces">
+              <label>Subrace</label>
+              <select>
+                <option ng-repeat="subrace in subraces">{{subrace}}</option>
+              </select>
+            </span>
+
+        <!-- Alignment -->
+        <label>Alignment</label>
+        <select>
+              <option ng-repeat="alignment in alignments">{{alignment}}</option>
+          </select>
+
+        <!-- Experience -->
+        <label>Experience Points</label>
+        <input type="number" step="100">
+
+        <!-- Class -->
+        <br>
+        <button ng-click="addNewClass()">+</button>
+        <div ng-repeat="class in characterClasses track by $index">
+            <button ng-hide="showMinus === false || !showMinus" ng-click="removeClass()">-</button>
+            <label>Classes/Levels:</label>
+            <label>Class</label>
+            <select ng-model="selectedClass[$index]" ng-change="classChanged()">
+              <option ng-repeat="class in classes" value="{{class}}">{{class}}</option>
+            </select>
+            <span ng-show="subClassShow"><label>{{subClass}}</label>
+            <select>
+              <option ng-repeat="class in subclassName">{{class}}</option>
+            </select></span>
+            <label>Level</label>
+            <select>
+              <option ng-repeat="level in levels">{{level}}</option>
+            </select>
+        </div>
+
+        <!-- <div class="class1">
+          {{characterClasses[1]}}
+        </div> -->
+
+        <!-- Background -->
+        <label>Background</label>
+        <select>
+          <option ng-repeat="origin in backgrounds">{{origin}}</option>
+        </select>
+    </form>
+</div>
