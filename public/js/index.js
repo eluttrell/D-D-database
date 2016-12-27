@@ -8,30 +8,30 @@ const app = angular.module('rpg', ['ui.router', 'ngCookies']);
 app.factory('$RpgFactory', function($http, $state, $cookies) {
     let service = {};
 
-    // service.signupPage = function(data) {
-    //   let url = '/signup';
-    //     return $http({
-    //       method: 'POST',
-    //       data: data,
-    //       url: url
-    //     });
-    // };
-    //
-    // service.showLogin = function(data) {
-    //     let url = '/login';
-    //     return $http({
-    //             method: 'POST',
-    //             data: data,
-    //             url: url
-    //         })
-    //         .then(function(loggedIn) {
-    //             // Put information to be stored as cookies here:
-    //             $cookies.putObject('username', loggedIn.data.info.user_id);
-    //             $cookies.putObject('token', loggedIn.data.info.token);
-    //             $cookies.putObject('expiry', loggedIn.data.info.timestamp);
-    //             console.log("Info:", loggedIn.data.info);
-    //         });
-    // };
+    service.signupPage = function(data) {
+      let url = '/signup';
+        return $http({
+          method: 'POST',
+          data: data,
+          url: url
+        });
+    };
+
+    service.showLogin = function(data) {
+        let url = '/login';
+        return $http({
+                method: 'POST',
+                data: data,
+                url: url
+            })
+            .then(function(loggedIn) {
+                // Put information to be stored as cookies here:
+                $cookies.putObject('username', loggedIn.data.info.user_id);
+                $cookies.putObject('token', loggedIn.data.info.token);
+                $cookies.putObject('expiry', loggedIn.data.info.timestamp);
+                console.log("Info:", loggedIn.data.info);
+            });
+    };
 
     return service;
 });
@@ -124,82 +124,85 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
     // ====================
 
     $scope.classes = [
-        'Barbarian',
-        'Bard',
-        'Cleric',
-        'Druid',
-        'Fighter',
-        'Monk',
-        'Paladin',
-        'Ranger',
-        'Rogue',
-        'Sorcerer',
-        'Warlock',
-        'Wizard'
+        {name: 'Barbarian'},
+        {name: 'Bard'},
+        {name: 'Cleric'},
+        {name: 'Druid'},
+        {name: 'Fighter'},
+        {name: 'Monk'},
+        {name: 'Paladin'},
+        {name: 'Ranger'},
+        {name: 'Rogue'},
+        {name: 'Sorcerer'},
+        {name: 'Warlock'},
+        {name: 'Wizard'}
     ]
 
-    function getSubclass() {
-        $scope.subClass = $scope.subClasses[$scope.selectedClass][0];
-        console.log('getSubclass function results:', $scope.subClass);
-        $scope.characterClasses.push({class: $scope.selectedClass, subclass: $scope.subClass});
-        console.log($scope.characterClasses);
+    function getSubclass(clazz) {
+        $scope.subClass = $scope.subClasses[clazz.selectedClass].name;
+        $scope.characterClasses[clazz.id].subClassName = $scope.subClass;
+        // console.log('characterClasses:', $scope.characterClasses);
     }
 
-    function getSubclassNames() {
-        $scope.subclassName = $scope.subClasses[$scope.selectedClass][1];
-        console.log($scope.subclassName);
+    function getSubclassNames(clazz) {
+        $scope.subclassName = $scope.subClasses[clazz.selectedClass].subClasses;
+        $scope.subs.splice(clazz.id, 0, $scope.subclassName);
+        // console.log('characterClasses:', $scope.characterClasses);
     }
 
-    $scope.classChanged = function() {
+    $scope.classChanged = function(clazz) {
+        console.log('clazz:', clazz);
         $scope.subClassShow = true;
-        console.log('selectedClass:', $scope.selectedClass);
-        getSubclass();
-        getSubclassNames();
-
-        // console.log($scope.selectedClass);
-        // $scope.subClass = $scope.selectedClass.subclasses[0]
-            // $scope.subClasses = $scope.allSubClasses[$scope.selectedClass][0]
-            // $scope.subClassName = $scope.allSubClasses[$scope.selectedClass][1]
+        getSubclass(clazz);
+        getSubclassNames(clazz);
     }
 
 
 
-    $scope.characterClasses = [{'id': 'class1'}];
+    $scope.characterClasses = [{id: 0, subClassName: undefined}];
+
+    $scope.subs = [];
+
 
     $scope.addNewClass = function() {
-        let newItemNo = $scope.characterClasses.length+1;
-        $scope.characterClasses.push({'id':'class'+newItemNo});
-        console.log($scope.characterClasses);
+        let newItemNo = $scope.characterClasses.length;
+        $scope.characterClasses.push({id:newItemNo, subClassName: undefined, subs: undefined});
+        // console.log($scope.characterClasses);
         $scope.showMinus = true;
     };
 
-    $scope.removeClass = function() {
+    $scope.removeClass = function(num) {
         if ($scope.characterClasses.length <= 2) {
           $scope.showMinus = false;
-          console.log($scope.showMinus);
+          // console.log($scope.showMinus);
         }
-        let lastItem = $scope.characterClasses.length-1;
-        $scope.characterClasses.splice(lastItem);
-        console.log($scope.characterClasses);
+        let lastItem = num;
+        // console.log(lastItem);
+        $scope.characterClasses.splice(lastItem, 1);
+        $scope.subs.splice(lastItem, 1);
+        // console.log($scope.characterClasses);
 
     };
 
 
     $scope.subClasses = {
-        Barbarian: [
-            'Primal Path', {
+        Barbarian: {
+            name: 'Primal Path',
+            subClasses: {
                 '1': 'Path of the Beserker',
                 '2': 'Path of the Totem Warrior'
             }
-        ],
-        Bard: [
-            'Bard College', {
+        },
+        Bard: {
+            name: 'Bard College',
+            subClasses: {
                 '1': 'College of Lore',
                 '2': 'College of Valor'
             }
-        ],
-        Cleric: [
-            'Divine Domain', {
+        },
+        Cleric: {
+            name: 'Divine Domain',
+            subClasses: {
                 '1': 'Knowledge Domain',
                 '2': 'Life Domain',
                 '3': 'Light Domain',
@@ -208,62 +211,71 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
                 '6': 'Trickery Domain',
                 '7': 'War Domain'
             }
-        ],
-        Druid: [
-            'Druid Circle', {
+        },
+        Druid: {
+            name: 'Druid Circle',
+            subClasses: {
                 '1': 'Circle of the Land',
                 '2': 'Circle of the Moon'
             }
-        ],
-        Fighter: [
-            'Martial Archetype', {
+        },
+        Fighter: {
+            name: 'Martial Archetype',
+            subClasses: {
                 '1': 'Battle Master',
                 '2': 'Champion',
                 '3': 'Eldritch Knight'
             }
-        ],
-        Monk: [
-            'Monastic Tradition', {
+        },
+        Monk: {
+            name: 'Monastic Tradition',
+            subClasses: {
                 '1': 'Way of Shadow',
                 '2': 'Way of the Four Elements',
                 '3': 'Way of the Open Hand'
             }
-        ],
-        Paladin: [
-            'Sacred Oath', {
+        },
+        Paladin: {
+            name: 'Sacred Oath',
+            subClasses: {
                 '1': 'Oath of Devotion',
                 '2': 'Oath of Vengeance',
                 '3': 'Oath of the Ancients'
             }
-        ],
-        Ranger: [
-            'Ranger Archetype', {
+        },
+        Ranger: {
+            name: 'Ranger Archetype',
+            subClasses: {
                 '1': 'Beast Master',
                 '2': 'Hunter'
             }
-        ],
-        Rogue: [
-            'Roguish Archetype', {
+        },
+        Rogue: {
+            name: 'Roguish Archetype',
+            subClasses: {
                 '1': 'Arcane Trickster',
                 '2': 'Assassin',
                 '3': 'Thief'
             }
-        ],
-        Sorcerer: [
-            'Subclass', {
+        },
+        Sorcerer: {
+            name: 'Subclass',
+            subClasses: {
                 '1': 'Draconic Ancestry',
                 '2': 'Wild Magic'
             }
-        ],
-        Warlock: [
-            'Otherworldly Patrons', {
+        },
+        Warlock: {
+            name: 'Otherworldly Patrons',
+            subClasses: {
                 '1': 'The Archfey',
                 '2': 'The Fiend',
                 '3': 'The Great Old One'
             }
-        ],
-        Wizard: [
-            'Arcane Tradition', {
+        },
+        Wizard: {
+            name: 'Arcane Tradition',
+            subClasses: {
                 '1': 'School of Abjuratiom',
                 '2': 'School of Conjuration',
                 '3': 'School of Divination',
@@ -273,7 +285,7 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
                 '7': 'School of Necromancy',
                 '8': 'School of Transmutation'
             }
-        ]
+        }
     }
 
     // Level Logic

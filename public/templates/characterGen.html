@@ -1,7 +1,7 @@
 <h1>Character Generator</h1>
 
 <div class="container">
-    <form class="" method="post">
+    <form method="post">
 
         <!-- Character Name -->
         <label for="">Name</label>
@@ -59,15 +59,15 @@
         <br>
         <button ng-click="addNewClass()">+</button>
         <div ng-repeat="class in characterClasses track by $index">
-            <button ng-hide="showMinus === false || !showMinus" ng-click="removeClass()">-</button>
+            <button ng-hide="showMinus === false || !showMinus" ng-click="removeClass($index)">-</button>
             <label>Classes/Levels:</label>
             <label>Class</label>
-            <select ng-model="selectedClass[$index]" ng-change="classChanged()">
-              <option ng-repeat="class in classes" value="{{class}}">{{class}}</option>
+            <select ng-model="class.selectedClass" ng-change="classChanged(class)">
+              <option ng-repeat="class in classes" value="{{class.name}}">{{class.name}}</option>
             </select>
-            <span ng-show="subClassShow"><label>{{subClass}}</label>
+            <span ng-show="subClassShow"><label>{{characterClasses[$index].subClassName}}</label>
             <select>
-              <option ng-repeat="class in subclassName">{{class}}</option>
+              <option ng-repeat="subs in subs[$index]">{{subs}}</option>
             </select></span>
             <label>Level</label>
             <select>
@@ -84,5 +84,15 @@
         <select>
           <option ng-repeat="origin in backgrounds">{{origin}}</option>
         </select>
+
+        <!-- Ability Scores -->
+        <h3>Ability Scores</h3>
+        <button type="button" name="rule-variant">Rule Variant</button>
+        <div ng-show="!custom" class="random-scores">
+
+        </div>
+        <div ng-show="custom" class="custom-scores">
+
+        </div>
     </form>
 </div>
