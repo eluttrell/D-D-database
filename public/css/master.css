@@ -1,1 +1,25 @@
 
+
+/*Character Gen page*/
+.basic-info {
+  border: 2px solid black;
+  padding: 0 10px;
+}
+
+.ability-scores {
+  border: 2px solid black;
+  padding: 0 10px;
+  margin: 10px 14px;
+}
+
+.saving-throws {
+  border: 2px solid black;
+  padding: 0 10px;
+  margin: 10px 10px;
+}
+
+.hit-points {
+  border: 2px solid black;
+  padding: 0 10px;
+  margin: 10px 14px;
+}

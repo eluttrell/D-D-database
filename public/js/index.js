@@ -9,11 +9,11 @@ app.factory('$RpgFactory', function($http, $state, $cookies) {
     let service = {};
 
     service.signupPage = function(data) {
-      let url = '/signup';
+        let url = '/signup';
         return $http({
-          method: 'POST',
-          data: data,
-          url: url
+            method: 'POST',
+            data: data,
+            url: url
         });
     };
 
@@ -42,6 +42,7 @@ app.factory('$RpgFactory', function($http, $state, $cookies) {
 // ========================
 
 app.controller('SignupController', function($scope, $state, $RpgFactory) {
+
     $scope.signUp = function() {
         let data = {
             username: $scope.username,
@@ -123,20 +124,33 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
     // Class/Subclass Logic
     // ====================
 
-    $scope.classes = [
-        {name: 'Barbarian'},
-        {name: 'Bard'},
-        {name: 'Cleric'},
-        {name: 'Druid'},
-        {name: 'Fighter'},
-        {name: 'Monk'},
-        {name: 'Paladin'},
-        {name: 'Ranger'},
-        {name: 'Rogue'},
-        {name: 'Sorcerer'},
-        {name: 'Warlock'},
-        {name: 'Wizard'}
-    ]
+
+
+    $scope.classes = [{
+        name: 'Barbarian'
+    }, {
+        name: 'Bard'
+    }, {
+        name: 'Cleric'
+    }, {
+        name: 'Druid'
+    }, {
+        name: 'Fighter'
+    }, {
+        name: 'Monk'
+    }, {
+        name: 'Paladin'
+    }, {
+        name: 'Ranger'
+    }, {
+        name: 'Rogue'
+    }, {
+        name: 'Sorcerer'
+    }, {
+        name: 'Warlock'
+    }, {
+        name: 'Wizard'
+    }]
 
     function getSubclass(clazz) {
         $scope.subClass = $scope.subClasses[clazz.selectedClass].name;
@@ -155,26 +169,47 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
         $scope.subClassShow = true;
         getSubclass(clazz);
         getSubclassNames(clazz);
+        if (clazz.selectedClass === 'Fighter') {
+            $scope.ifFighter = true;
+        } else {
+            $scope.ifFighter = false;
+        }
     }
 
+    $scope.fightStyle = [
+        'Archery',
+        'Defense',
+        'Dueling',
+        'Great-Weapon Fighting',
+        'Protection',
+        'Two-Weapon Fighting'
+    ];
 
 
-    $scope.characterClasses = [{id: 0, subClassName: undefined}];
+
+    $scope.characterClasses = [{
+        id: 0,
+        subClassName: undefined
+    }];
 
     $scope.subs = [];
 
 
     $scope.addNewClass = function() {
         let newItemNo = $scope.characterClasses.length;
-        $scope.characterClasses.push({id:newItemNo, subClassName: undefined, subs: undefined});
+        $scope.characterClasses.push({
+            id: newItemNo,
+            subClassName: undefined,
+            subs: undefined
+        });
         // console.log($scope.characterClasses);
         $scope.showMinus = true;
     };
 
     $scope.removeClass = function(num) {
         if ($scope.characterClasses.length <= 2) {
-          $scope.showMinus = false;
-          // console.log($scope.showMinus);
+            $scope.showMinus = false;
+            // console.log($scope.showMinus);
         }
         let lastItem = num;
         // console.log(lastItem);
@@ -289,10 +324,161 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory) {
     }
 
     // Level Logic
+    // ===========
     $scope.levels = [];
     for (var i = 1; i <= 20; i++) {
         $scope.levels.push(i);
     }
+
+    // Ability Scores
+    // ==============
+    $scope.buyPoints = 0;
+
+    $scope.addPoint = function(score) {
+        if (score <= 13) {
+            $scope.buyPoints++;
+        } else {
+            $scope.buyPoints += 2;
+        }
+        if ($scope.buyPoints >= 27) {
+            $scope.buyMax = true;
+        }
+    }
+
+    $scope.subtractPoint = function(score) {
+        if (score >= 14) {
+            $scope.buyPoints -= 2;
+        }
+        $scope.buyPoints--;
+        if ($scope.buyPoints < 27) {
+            $scope.buyMax = false;
+        }
+    }
+
+    $scope.getTotals = function() {
+        $scope.strTotal = $scope.strBase + $scope.strRace + $scope.strSubrace + $scope.strFeats;
+        $scope.dexTotal = $scope.dexBase + $scope.dexRace + $scope.dexSubrace + $scope.dexFeats;
+        $scope.conTotal = $scope.conBase + $scope.conRace + $scope.conSubrace + $scope.conFeats;
+        $scope.intTotal = $scope.intBase + $scope.intRace + $scope.intSubrace + $scope.intFeats;
+        $scope.wisTotal = $scope.wisBase + $scope.wisRace + $scope.wisSubrace + $scope.wisFeats;
+        $scope.chaTotal = $scope.chaBase + $scope.chaRace + $scope.chaSubrace + $scope.chaFeats;
+    }
+
+    $scope.randomScores = function() {
+        $scope.random = true;
+    };
+
+    $scope.buyScores = function() {
+        $scope.random = false;
+        $scope.strBase = 8;
+        $scope.dexBase = 8;
+        $scope.conBase = 8;
+        $scope.intBase = 8;
+        $scope.wisBase = 8;
+        $scope.chaBase = 8;
+        $scope.getTotals();
+    };
+
+    $scope.genRandom = function() {
+        let rands = [];
+        for (var i = 0; i < 6; i++) {
+            let temp1 = Math.floor((Math.random() * 6) + 1);
+            let temp2 = Math.floor((Math.random() * 6) + 1);
+            let temp3 = Math.floor((Math.random() * 6) + 1);
+            let temp4 = Math.floor((Math.random() * 6) + 1);
+            let tempArr = [temp1, temp2, temp3, temp4];
+            tempArr.sort();
+            temp1 = tempArr.pop();
+            temp2 = tempArr.pop();
+            temp3 = tempArr.pop();
+            rands.push(temp1 + temp2 + temp3);
+        }
+        $scope.strBase = rands[0];
+        $scope.dexBase = rands[1];
+        $scope.conBase = rands[2];
+        $scope.intBase = rands[3];
+        $scope.wisBase = rands[4];
+        $scope.chaBase = rands[5];
+        $scope.getTotals();
+        $scope.mods
+    };
+
+    // Base Scores
+    $scope.strBase = 8;
+    $scope.dexBase = 8;
+    $scope.conBase = 8;
+    $scope.intBase = 8;
+    $scope.wisBase = 8;
+    $scope.chaBase = 8;
+
+    // Race Scores
+    $scope.strRace = 0;
+    $scope.dexRace = 0;
+    $scope.conRace = 0;
+    $scope.intRace = 0;
+    $scope.wisRace = 0;
+    $scope.chaRace = 0;
+
+    // Subrace Scores
+    $scope.strSubrace = 0;
+    $scope.dexSubrace = 0;
+    $scope.conSubrace = 0;
+    $scope.intSubrace = 0;
+    $scope.wisSubrace = 0;
+    $scope.chaSubrace = 0;
+
+    // Feats
+    $scope.strFeats = 0;
+    $scope.dexFeats = 0;
+    $scope.conFeats = 0;
+    $scope.intFeats = 0;
+    $scope.wisFeats = 0;
+    $scope.chaFeats = 0;
+
+    // Saving Throws
+    $scope.savingThrows = [
+        'Strength',
+        'Dexterity',
+        'Constitution',
+        'Intelligence',
+        'Wisdom',
+        'Charisma'
+    ];
+
+    // Skills
+    $scope.skills = [
+        'Acrobatics',
+        'Animal Handling',
+        'Arcana',
+        'Athletics',
+        'Deception',
+        'History',
+        'Insight',
+        'Intimidation',
+        'Investigation',
+        'Medecine',
+        'Nature',
+        'Perception',
+        'Performance',
+        'Persuasion',
+        'Religion',
+        'Sleight of Hand',
+        'Stealth',
+        'Survival'
+    ]
+
+    // Totals
+    $scope.getTotals();
+
+    // Hit points Logic
+    // ================
+
+    
+
+    // angular.element(document).ready(function () {
+    //     if (document.getElementById('msg').innerHTML = 'Hello')
+    //     document.getElementById('msg').innerHTML = 'Hello';
+    // });
 
 
 
