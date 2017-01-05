@@ -1,12 +1,25 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open+Sans', sans-serif;
+  font-weight: 300;
+}
 
+label {
+  font-family: 'Open+Sans', sans-serif;
+  font-weight: 500;
+}
 
 /*Character Gen page*/
 .basic-info {
   border: 2px solid black;
   padding: 0 10px;
 }
-
-.ability-scores {
+/*
+.ability-scores,
+.hit-points,
+.tools,
+.fun-items,
+.equipment,
+.weapons {
   border: 2px solid black;
   padding: 0 10px;
   margin: 10px 14px;
@@ -16,10 +29,168 @@
   border: 2px solid black;
   padding: 0 10px;
   margin: 10px 10px;
+}*/
+
+.weapons,
+.ability-scores {
+  margin: auto;
 }
 
-.hit-points {
-  border: 2px solid black;
-  padding: 0 10px;
-  margin: 10px 14px;
+.weapons-info {
+  margin: 10px;
 }
+
+.border-box {
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+  /*border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;*/
+  padding: 10px;
+}
+
+.small-border {
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+  padding: 2.5px;
+  margin-top: 2.5px;
+}
+
+.mod-border {
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+  padding: 2.5px;
+  margin: auto;
+  width: 35px;
+}
+
+.ability-score-border {
+  border: 1px solid #a0a0a0;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.border-top {
+  border-top: 1px solid #a0a0a0;
+  margin-top: 2.5px;
+}
+
+.second-row {
+  margin: 10px;
+}
+
+.second-row .row {
+  margin: 0;
+}
+
+.ac-row input {
+  margin: 1.5px 3px;
+}
+
+.center {
+  text-align: center;
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom-text-div {
+  position: relative;
+}
+
+.ability-score .row {
+  margin: 0;
+}
+
+.border-top h6 {
+  margin: 0;
+}
+
+.char-details {
+  height: 408px;
+}
+
+.char-details div {
+  height: 89.76px;
+  padding: 2.5px;
+  margin-bottom: 9px;
+}
+
+.attacks-features div {
+  height: 222px;
+  margin-bottom: 5px;
+}
+
+.label-back {
+  background-color: #b2b2b3;
+    width: 100%;
+}
+
+.attacks-features {
+  height: 475.5px;
+}
+
+#death-fails {
+  margin-left: 18px;
+}
+
+#death-saves {
+  height: 91px;
+}
+
+#inspiration {
+  margin-left: -50px;
+}
+
+#inspiration-label {
+  margin-right: 0;
+}
+
+.print-basic-info label {
+  margin: 0 42px;
+}
+
+#gender-margin {
+  margin-left: -61px;
+}
+
+.char-sheet {
+  padding: 20px;
+  /*height: 1500px;
+  width: 1275;
+  background-image: url(../images/charSheet.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;*/
+}
+
+#char-name {
+  background-color: #f1f1f1;
+}
+
+.char-sheet hr {
+  border-top: 1px solid #a0a0a0;
+}
+
+.char-name {
+  height: 100px;
+  text-align: center;
+}
+
+/*@media print {
+  .char-sheet {
+    height: 10in;
+    width: 7.5in;
+  }
+
+  .print-char-name {
+    width: 3.5in;
+    float: left;
+  }
+
+  .print-basic-info {
+    width: 5.5in;
+    float: left;
+  }
+}*/

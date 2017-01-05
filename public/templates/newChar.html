@@ -1,0 +1,231 @@
+<!-- <div class="container">
+  <div class="char-sheet">
+
+  </div>
+</div> -->
+
+<div class="container char-sheet border-box">
+    <div class="row">
+        <div class="col-md-5 char-name print-char-name">
+            <div id="char-name" class="border-box">
+                <h3>{{newChar.id}}</h3>
+            </div>
+        </div>
+        <div class="col-md-7 print-basic-info">
+            <div class="center">
+                <div class="col-md-4 center">
+                    <label>Class & Level</label>
+                    <br>
+                    <!-- <input ng-repeat="class in newCharClasses track by $index" type="text" value="{{newCharClasses[$index].class}}({{newChar.level.level}})"> -->
+                    <i ng-repeat="class in newCharClasses track by $index">{{newCharClasses[$index].class}}{{newChar.level[$index].level}} </i>
+                    <br>
+                    <br>
+                    <label>Race</label>
+                    <br>
+                    <i>{{newChar.race}}<span ng-if="newChar.subRace">, {{newChar.subRace}}</span></i>
+                </div>
+                <div class="col-md-4 center">
+                    <label>Background</label>
+                    <br>
+                    <i>{{newChar.background}}</i>
+                    <br>
+                    <br>
+                    <label>Alignment</label>
+                    <br>
+                    <i>{{newChar.alignment}}</i>
+                </div>
+                <div class="col-md-4 center">
+                    <label>Player Name</label>
+                    <br>
+                    <i>{{newChar.playerName}}</i>
+                    <br>
+                    <br>
+                    <label>Exp. Points</label>
+                    <br>
+                    <i>{{newChar.experience}}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="border-box second-row center">
+                    <div class="small-border">
+                        <input type="text" size="2" value="{{newChar.proficiencyBonus}}" readonly>
+                        <label>Proficiency Bonus</label>
+                    </div>
+                    <div class="small-border">
+                        <input id="inspiration" type="text" size="2" value="{{newChar.inspiration}}" readonly>
+                        <label id="inspiration-label">Inspiration</label>
+                    </div>
+                    <br>
+                    <div class="ability-score">
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.strMod}}</p>
+                                <h4>{{newChar.strScore}}</h4>
+                                <label id="strength">Strength</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                                <h6><input type="checkbox"> Athletics <u>{{newChar.strMod}}</u></h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.dexMod}}</p>
+                                <h4>{{newChar.dexScore}}</h4>
+                                <label id="dexterity">Dexterity</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                                <h6><input type="checkbox"> Acrobatics <u>{{newChar.dexMod}}</u></h6>
+                                <h6><input type="checkbox"> Sleight of Hand <u>{{newChar.dexMod}}</u></h6>
+                                <h6><input type="checkbox"> Stealth <u>{{newChar.dexMod}}</u></h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.conMod}}</p>
+                                <h4>{{newChar.conScore}}</h4>
+                                <label id="constitution">Constitution</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.intMod}}</p>
+                                <h4>{{newChar.intScore}}</h4>
+                                <label id="intelligence">Intelligence</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                                <h6><input type="checkbox"> Arcana <u>{{newChar.intMod}}</u></h6>
+                                <h6><input type="checkbox"> History <u>{{newChar.intMod}}</u></h6>
+                                <h6><input type="checkbox"> Investigation <u>{{newChar.intMod}}</u></h6>
+                                <h6><input type="checkbox"> Nature <u>{{newChar.intMod}}</u></h6>
+                                <h6><input type="checkbox"> Religion <u>{{newChar.intMod}}</u></h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.wisMod}}</p>
+                                <h4>{{newChar.wisScore}}</h4>
+                                <label id="wisdom">Wisdom</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                                <h6><input type="checkbox"> Animal Handling <u>{{newChar.wisMod}}</u></h6>
+                                <h6><input type="checkbox"> Insight <u>{{newChar.wisMod}}</u></h6>
+                                <h6><input type="checkbox"> Medicine <u>{{newChar.wisMod}}</u></h6>
+                                <h6><input type="checkbox"> Perception <u>{{newChar.wisMod}}</u></h6>
+                                <h6><input type="checkbox"> Survival <u>{{newChar.wisMod}}</u></h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 small-border center">
+                                <p class="mod-border center">{{newChar.chaMod}}</p>
+                                <h4>{{newChar.chaScore}}</h4>
+                                <label id="charisma">Charisma</label>
+                            </div>
+                            <div class="col-md-6 center border-top">
+                                <input type="checkbox"> <label>Saving Throws</label>
+                                <h6><input type="checkbox"> Deception <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
+                                <h6><input type="checkbox"> Intimidation <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
+                                <h6><input type="checkbox"> Performance <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
+                                <h6><input type="checkbox"> Persuasion <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="small-border">
+                            <input type="text" size="2" value="{{newChar.wisMod}}" readonly>
+                            <label>Passive Wisdom (Perception)</label>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border-box second-row center">
+                <div class="center ac-row row">
+                    <div class="col-md-4 small-border center">
+                        <h4>20</h4>
+                        <label>AC</label>
+                    </div>
+                    <div class="col-md-4 small-border center">
+                        <h4>20</h4>
+                        <label>Initiative</label>
+                    </div>
+                    <div class="col-md-4 small-border center">
+                        <h4>20</h4>
+                        <label>Speed</label>
+                    </div>
+                </div>
+                <br>
+                <div class="border-box">
+                    <h4>20</h4>
+                    <label>Current Hit Points</label>
+                </div>
+                <br>
+                <div class="border-box">
+                    <input type="number">
+                    <br>
+                    <label>Temporary Hit Points</label>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6 small-border">
+                        <h4>20</h4>
+                        <br>
+                        <label>Hit Dice</label>
+                    </div>
+                    <div id="death-saves" class="col-md-6 small-border">
+                        <h6>successes <input type="checkbox"><input type="checkbox"><input type="checkbox"></h6>
+                        <h6 id="death-fails">failures <input type="checkbox"><input type="checkbox"><input type="checkbox"></h6>
+                        <label>Death Saves</label>
+                    </div>
+                </div>
+            </div>
+            <div class="border-box second-row attacks-features center">
+                <div class="attacks-equipment small-border bottom-text-div">
+                    <label class="label-back">Attacks</label>
+                </div>
+                <div class="attacks-equipment small-border">
+                    <label class="label-back">Spells</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border-box second-row char-details">
+                <div class="small-border center" id="personality">
+                  <label class="label-back">Personality Traits</label>
+                </div>
+                <div class="small-border center" id="ideals">
+                  <label class="label-back">Ideals</label>
+                </div>
+                <div class="small-border center" id="bonds">
+                  <label class="label-back">Bonds</label>
+                </div>
+                <div class="small-border center" id="flaws">
+                  <label class="label-back">Flaws</label>
+                </div>
+            </div>
+            <div class="border-box second-row attacks-features">
+                <div class="attacks-equipment small-border">
+                  <label class="label-back">Equipment</label>
+                </div>
+                <div class="attacks-equipment small-border">
+                  <label class="label-back">Features & Traits</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

@@ -1,92 +1,104 @@
-<div class="container">
+<div class="container center">
     <h1><u>Character Generator</u></h1>
-    <form method="post">
+    <form method="post" ng-submit="generateChar()">
 
         <div class="basic-info">
             <h3><u>Basic Information</u></h3>
 
-            <!-- Character Name -->
-            <label for="">Name</label>
-            <input id="charName" type="text" name="" placeholder="Character Name...">
+            <div class="row">
+              <div class="col-md-4">
+                <!-- Character Name -->
+                <label>Name</label>
+                <input id="charName" ng-model="charName" type="text" name="" placeholder="Character Name..."><br>
 
-            <!-- Player Name -->
-            <label for="">Player</label>
-            <input id="playerName" type="text" name="" placeholder="Player Name...">
+                <!-- Player Name -->
+                <label>Player</label>
+                <input ng-model="playerName" type="text" name="" placeholder="Player Name...">
+              </div>
+              <div class="col-md-4">
+                <!-- Age -->
+                <label>Age</label>
+                <input id="age" ng-model="charAge" type="text" name="" value=""><br>
 
-            <!-- Age -->
-            <label for="">Age</label>
-            <input id="age" type="text" name="" value="">
+                <!-- Gender -->
+                <span id="gender-margin"><label>Gender</label>
+                <select id="gender" ng-model="charSex" class="gender-selector" name="">
+                  <option value="Select">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="other">Other</option>
+                </select></span>
+              </div>
+              <div class="col-md-4">
+                <!-- Height -->
+                <label>Height</label>
+                <input id="height" ng-model="charHeight" type="text" name="" value=""><br>
 
-            <!-- Gender -->
-            <label for="">Gender</label>
-            <select id="gender" class="gender-selector" name="">
-              <option value="Select">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="other">Other</option>
-            </select>
-
-            <!-- Height -->
-            <label for="">Height</label>
-            <input id="height" type="text" name="" value="">
-
-            <!-- Weight -->
-            <label for="">Weight</label>
-            <input id="weight" type="text" name="" value="">
+                <!-- Weight -->
+                <label>Weight</label>
+                <input id="weight" ng-model="charWeight" type="text" name="" value="">
+              </div>
+            </div>
 
             <!-- Race/Subrace -->
-            <label for="">Race/Subrace:</label>
+            <label>Race/Subrace:</label>
             <label>Race</label>
             <select ng-model="selectedRace" ng-change="raceChanged()">
                 <option ng-repeat="race in races" value="{{race}}">{{race}}</option>
               </select>
             <span ng-show="subraces">
                 <label>Subrace</label>
-                <select ng-model="selectedSubrace">
+                <select ng-model="selectedSubrace" ng-change="subraceChanged()">
                   <option ng-repeat="subrace in subraces">{{subrace}}</option>
                 </select>
               </span>
 
             <!-- Alignment -->
             <label>Alignment</label>
-            <select>
+            <select ng-model="charAlign" ng-change="alignChange()">
                 <option ng-repeat="alignment in alignments">{{alignment}}</option>
             </select>
 
             <!-- Experience -->
             <label>Experience Points</label>
-            <input type="number" step="100">
+            <input ng-model="charExp" type="number" step="100">
 
             <!-- Class -->
             <br>
-            <button ng-click="addNewClass()">Add Class</button>
+            <button ng-click="addNewClass()" type="button">Add Class</button>
             <div ng-attr-id="{{ 'class-' + $index }}" ng-repeat="class in characterClasses track by $index">
                 <button ng-hide="showMinus === false || !showMinus" ng-click="removeClass($index)">-</button>
                 <label>Classes/Levels:</label>
                 <label>Class</label>
-                <select ng-model="class.selectedClass" ng-change="classChanged(class)">
+                <select ng-model="class.selectedClass" ng-change="classChanged(class, $index)">
                 <option ng-repeat="class in classes" value="{{class.name}}">{{class.name}}</option>
               </select>
                 <span ng-show="subClassShow"><label>{{characterClasses[$index].subClassName}}</label>
-              <select>
+              <select ng-model="subClassNames" ng-change="saveSubclassNames(subClassNames, $index)">
                 <option ng-repeat="subs in subs[$index]">{{subs}}</option>
-              </select></span>
-                <span ng-show="ifFighter"><select>
-                  <option ng-repeat="style in fightStyle">{{style}}</option>
-              </select></span>
-                <label>Level</label>
+
+              </select>
+              <!-- <span ng-if="ifFighter">
+                <label>Style</label>
                 <select>
-                <option ng-repeat="level in levels">{{level}}</option>
+                <option ng-repeat="style in fightStyle">{{style}}</option>
+                </select>
+              </span> -->
+                </span>
+                <label>Level</label>
+                <select ng-model="level.level" ng-change="levelChanged(level, $index)">
+                <option ng-repeat="level in levels track by $index" value="{{level}}">{{level}}</option>
               </select>
             </div>
 
             <!-- Background -->
             <label>Background</label>
             <select>
-            <option ng-repeat="origin in backgrounds">{{origin}}</option>
+            <!-- <option ng-repeat="origin in backgrounds">{{origin}}</option> -->
+            <option>Coming Soon!</option>
           </select>
         </div>
-
+        <hr>
         <!-- Ability Scores -->
         <div class="row center-block">
             <div class="col-md-4 ability-scores">
@@ -97,77 +109,193 @@
                 <div class="col-md-6">
                     <button ng-click="genRandom()" ng-show="random" type="button" name="rule-variant">Re-Roll</button>
                     <label ng-show="!random" for="">Buy Scores</label>
-                    <!-- <p ng-show="!random">Points Remaining: {{buyPoints}}</p> -->
+                    <p ng-show="!random"><b>Points: {{27 - buyPoints}}</b></p>
                     <div ng-show="!custom" class="random-scores">
                         <div class="">
                             <label>Str</label>
                             <span ng-hide="random"><button ng-click="strBase = strBase + 1; addPoint(strBase); getTotals()" ng-hide="strBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="strBase = strBase - 1; subtractPoint(strBase); getTotals()" ng-hide="strBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{strTotal}}">
+                            <p>({{strMod}})</p>
                         </div>
                         <div class="">
                             <label>Dex</label>
                             <span ng-hide="random"><button ng-click="dexBase = dexBase + 1; addPoint(dexBase); getTotals()" ng-hide="dexBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="dexBase = dexBase - 1; subtractPoint(dexBase); getTotals()" ng-show="!random" ng-hide="dexBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{dexTotal}}">
+                            <p>({{dexMod}})</p>
                         </div>
                         <div class="">
                             <label>Con</label>
                             <span ng-hide="random"><button ng-click="conBase = conBase + 1; addPoint(conBase); getTotals()" ng-hide="conBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="conBase = conBase - 1; subtractPoint(conBase); getTotals()" ng-show="!random" ng-hide="conBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{conTotal}}">
+                            <p>({{conMod}})</p>
                         </div>
                         <div class="">
                             <label>Int</label>
                             <span ng-hide="random"><button ng-click="intBase = intBase + 1; addPoint(intBase); getTotals()" ng-hide="intBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="intBase = intBase - 1; subtractPoint(intBase); getTotals()" ng-show="!random" ng-hide="intBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{intTotal}}">
+                            <p>({{intMod}})</p>
                         </div>
                         <div class="">
                             <label>Wis</label>
                             <span ng-hide="random"><button ng-click="wisBase = wisBase + 1; addPoint(wisBase); getTotals()" ng-hide="wisBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="wisBase = wisBase - 1; subtractPoint(wisBase); getTotals()" ng-show="!random" ng-hide="wisBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{wisTotal}}">
+                            <p>({{wisMod}})</p>
                         </div>
                         <div class="">
                             <label>Cha</label>
                             <span ng-hide="random"><button ng-click="chaBase = chaBase + 1; addPoint(chaBase); getTotals()" ng-hide="chaBase >= 15 || buyMax" type="button" name="button">+</button><button ng-click="chaBase = chaBase - 1; subtractPoint(chaBase); getTotals()" ng-show="!random" ng-hide="chaBase <= 8" type="button" name="button">-</button></span>
                             <input readonly size="2" value="{{chaTotal}}">
+                            <p>({{chaMod}})</p>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <label>stuff</label>
                 </div>
             </div>
             <div class="col-md-3 saving-throws">
                 <h3><u>Saving Throws</u></h3>
-                <div ng-repeat="item in savingThrows">
-                    <input type="checkbox" value="{{item}}"> {{item}}
+                <!-- <div ng-repeat="item in savingThrows track by $index">
+                    <input ng-click="saveThrow(item, $index)" type="checkbox" value="{{item}}"> {{item}}
                     <br>
-                </div>
+                </div> -->
+                <p><i>{{save1}}<span ng-if="save1">, </span>{{save2}}</i></p>
+
                 <h3><u>Skills</u></h3>
                 <p><b>Check skills with proficiency</b></p>
-                <div ng-repeat="skill in skills">
-                    <input type="checkbox" value="{{skill}}"> {{skill}}
+                <div ng-repeat="skill in skills track by $index">
+                    <input ng-checked="skillChoice.indexOf(skill) > -1" ng-click="skillGrab(skill)" type="checkbox" value="{{skill}}"> {{skill}}
                     <br>
                 </div>
             </div>
             <div class="col-md-4 hit-points">
                 <h3><u>Hit Points</u></h3>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label><u>Max</u></label>
                     <br>
                     <input value="{{hitMax}}" size="2" readonly>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label><u>Base</u></label>
                     <br>
                     <input value="{{hitBase}}" size="2" readonly>
                 </div>
-                <div class="col-md-2">
-                    <label><u>{{classMod}}</u></label>
+                <div class="col-md-3">
+                    <label><u>Con Bonus</u></label>
                     <br>
-                    <input value="{{classModBonus}}" size="2" readonly>
+                    <input value="{{conMod}}" size="2" readonly>
                 </div>
-                <div class="col-md-2">
-                    <label><u>{{raceMod}}</u></label>
+                <div class="col-md-3">
+                    <label><u>Hit Dice</u></label>
                     <br>
-                    <input value="{{raceModBonus}}" size="2" readonly>
+                    <input value="{{selectedLevel.level}}" size="2" readonly>
+                </div>
+                <h3><u>Languages</u></h3>
+                <label>Common Languages</label>
+                <div ng-repeat="language in cLang">
+                    <input type="checkbox" value="{{language}}"> {{language}}
+                    <br>
+                </div>
+                <label>Exotic Languages</label>
+                <!-- <div ng-dropdown-multiselect="" options="eLang" extra-settings="langSettings">
+
+                  </div> -->
+                <div ng-repeat="language in eLang">
+                    <input type="checkbox" value="{{language}}"> {{language}}
+                    <br>
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="row center-block">
+            <div class="col-md-3 tools">
+                <h3><u>Tools</u></h3>
+                <div ng-repeat="tool in tools">
+                    <input type="checkbox" value="{{tool}}"> {{tool}}
+                </div>
+                <label>Other</label>
+                <div ng-repeat="tool in otherTools">
+                    <input type="checkbox" value="{{tool}}"> {{tool}}
+                </div>
+            </div>
+            <div class="col-md-3 fun-items">
+                <h3><u>Entertainment</u></h3>
+                <label>Game Sets</label>
+                <div ng-repeat="gameset in gameSets">
+                    <input type="checkbox" value="{{gameset}}"> {{gameset}}
+                </div>
+                <label>Musical Instruments</label>
+                <div ng-repeat="instrument in instruments">
+                    <input type="checkbox" value="{{instrument}}"> {{instrument}}
+                </div>
+            </div>
+            <div class="col-md-4 equipment">
+                <h3><u>Armour</u></h3>
+                <div>
+                    <label>Armour Type</label>
+                    <select ng-model="armour.choice" ng-change="armourChange(armour)">
+                    <option ng-repeat="armour in armourNames" value="{{armour}}">{{armour}}</option>
+                </select>
+                    <br>
+                    <label>Category</label>
+                    <p>{{armourStuff.category}}</p>
+                    <label>Proficient?</label>
+                    <p>filler</p>
+                    <label>Stealth Penalty</label>
+                    <p><span ng-if="armourStuff.stealth === null">-</span>{{armourStuff.stealth}}</p>
+                    <label>Min Strength</label>
+                    <p><span ng-if="armourStuff.strength === null">-</span>{{armourStuff.strength}} <span ng-if="strTotal < armourStuff.strength">You can't use this armour!</span></p>
+                    <label>Base AC</label>
+                    <p>{{armourStuff.baseAC}}</p>
+                    <label>Dex Bonus</label>
+                    <p>{{dexMod}}</p>
+                    <label>Magical Bonus</label>
+                    <p>filler</p>
+                    <label>Sheild</label>
+                    <button ng-click="shieldStatus()" type="button" name="button"><span ng-show="noShield">Add Shield</span><span ng-show="!noShield">Remove Shield</span></button>
+                    <p ng-if="noShield">-</p>
+                    <p ng-if="!noShield">AC + 2</p>
+                    <label>Total AC</label>
+                    <p>{{armourStuff.baseAC + dexMod + shield}}</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row weapons">
+            <h3><u>Weapons</u></h3>
+            <h4>Melee</h4>
+            <button type="button" ng-click="addWeapon()">Add Melee</button>
+            <hr>
+            <div ng-repeat="weapons in chosenMeleeWeapons track by $index" class="">
+                <button ng-hide="takeWeapon === false" ng-click="dropWeapon($index)">-</button>
+                <label>Name</label>
+                <select ng-model="weapon.weapon" ng-change="weaponChanged(weapon, $index)">
+                <option ng-repeat="weapon in weaponNames" value="{{weapon}}"><span ng-hide="chosenMeleeWeapons[$index].id != undefined">{{weapon}}</span></option>
+                </select>
+                <label>Damage:</label>
+                <span class="weapons-info">{{chosenMeleeWeapons[$index].dice}}<span ng-if="chosenMeleeWeapons[$index].dice">d</span>{{chosenMeleeWeapons[$index].damage}}</span>
+                <label>Type:</label>
+                <span class="weapons-info">{{chosenMeleeWeapons[$index]['damage type']}}</span>
+                <label>Proficiency Bonus:</label>
+                <span class="weapons-info">{{proficiencyBonus}}</span>
+            </div>
+            <br>
+            <h4>Ranged</h4>
+            <button type="button" ng-click="addRanged()">Add Ranged</button>
+            <hr>
+            <div ng-repeat="weapons in chosenRanged track by $index" class="">
+                <button ng-hide="takeRanged === false" ng-click="dropRanged($index)">-</button>
+                <label>Name</label>
+                <select ng-model="ranged.ranged" ng-change="rangedChanged(ranged, $index)">
+                  <option ng-repeat="rangedWeaponName in rangedWeaponNames" value="{{rangedWeaponName}}">{{rangedWeaponName}}</option>
+                </select>
+
+                <br>
+            </div>
+        </div>
+        <hr>
+        <input ng-submit="generateChar()" type="submit"><button ng-click="testCharGenTable()" type="button" name="button">Test</button>
     </form>
 </div>
+<hr>
+<hr>

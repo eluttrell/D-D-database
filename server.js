@@ -6,10 +6,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 // const dotenv = require('dotenv').config();
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 mongoose.Promise = bluebird;
 
 mongoose.connect('mongodb://localhost/rpg');
@@ -39,6 +39,7 @@ const tokenSchema = new mongoose.Schema({
 })
 
 const characterSchema = new mongoose.Schema({
+    _id: String,
     characterInfo: {
         name: String,
         background: String,
@@ -51,6 +52,7 @@ const characterSchema = new mongoose.Schema({
         religion: String,
         level: Number,
         race: String,
+        subrace: String,
         size: String,
         gender: String,
         age: Number,
@@ -352,15 +354,19 @@ const Token = mongoose.model('Token', tokenSchema);
 app.post('/signup', function(req, res) {
   // Contains key-value pairs of data dsubmitted in the request body
   let userInfo = req.body;
-
+  console.log(userInfo);
   // Hash the password
   bcrypt.hash(userInfo.password, 12)
     .then(function(hash) {
-      return User.Create({
-        _id: userInfo.username,
-        first_name: userInfo.first_name,
-        last_name: userInfo.last_name,
-        email: userInfo.email,
+      let id = userInfo.id;
+      let first = userInfo.first_name;
+      let last = userInfo.last_name;
+      let email = userInfo.email;
+      return User.create({
+        _id: id,
+        first_name: first,
+        last_name: last,
+        email: email,
         password: hash
       });
     })
@@ -411,8 +417,26 @@ app.post('/login', function(req, res) {
 // Character creation page
 app.post('/newChar', function(req, res) {
   let userInfo = req.body;
-
-
+  console.log(userInfo);
+  Character.create({
+      _id: userInfo.id,
+      characterInfo: {
+        name: userInfo.id,
+        age: userInfo.age,
+        gender: userInfo.sex,
+        height: userInfo.height,
+        weight: userInfo.weight,
+        race: userInfo.race,
+        subrace: userInfo.subRace
+      }
+  })
+    .then(function() {
+      res.json({status: 'Success'})
+    })
+    .catch(function(err) {
+      console.log('Failed:', err.message);
+      res.json({status: 'Failed', error: err.stack});
+    });
 });
 
 
