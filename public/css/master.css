@@ -36,6 +36,31 @@ label {
   margin: auto;
 }
 
+.add-abliity-score {
+  padding-left: 20px;
+}
+
+.hp {
+  /*width: auto;*/
+  display: inline;
+}
+
+.abilities {
+  display: inline;
+}
+
+.tools,
+.fun-items,
+.equipment {
+  height: 565px;
+}
+
+.ability-scores,
+.hit-points,
+.saving-throws {
+  height: 580px;
+}
+
 .weapons-info {
   margin: 10px;
 }
@@ -65,7 +90,7 @@ label {
 
 .ability-score-border {
   border: 1px solid #a0a0a0;
-  border-radius: 100%;
+  border-radius: 40%;
   padding: 0;
 }
 

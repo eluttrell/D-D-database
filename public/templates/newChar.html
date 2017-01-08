@@ -68,8 +68,8 @@
                                 <label id="strength">Strength</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
-                                <h6><input type="checkbox"> Athletics <u>{{newChar.strMod}}</u></h6>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
+                                <h6><input type="checkbox" readonly> Athletics</h6>
                             </div>
                         </div>
                         <br>
@@ -80,10 +80,10 @@
                                 <label id="dexterity">Dexterity</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
-                                <h6><input type="checkbox"> Acrobatics <u>{{newChar.dexMod}}</u></h6>
-                                <h6><input type="checkbox"> Sleight of Hand <u>{{newChar.dexMod}}</u></h6>
-                                <h6><input type="checkbox"> Stealth <u>{{newChar.dexMod}}</u></h6>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
+                                <h6><input type="checkbox" readonly> Acrobatics</h6>
+                                <h6><input type="checkbox" readonly> Sleight of Hand</h6>
+                                <h6><input type="checkbox" readonly> Stealth</h6>
                             </div>
                         </div>
                         <br>
@@ -94,7 +94,7 @@
                                 <label id="constitution">Constitution</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
                             </div>
                         </div>
                         <br>
@@ -105,12 +105,12 @@
                                 <label id="intelligence">Intelligence</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
-                                <h6><input type="checkbox"> Arcana <u>{{newChar.intMod}}</u></h6>
-                                <h6><input type="checkbox"> History <u>{{newChar.intMod}}</u></h6>
-                                <h6><input type="checkbox"> Investigation <u>{{newChar.intMod}}</u></h6>
-                                <h6><input type="checkbox"> Nature <u>{{newChar.intMod}}</u></h6>
-                                <h6><input type="checkbox"> Religion <u>{{newChar.intMod}}</u></h6>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
+                                <h6><input type="checkbox" readonly> Arcana</h6>
+                                <h6><input type="checkbox" readonly> History</h6>
+                                <h6><input type="checkbox" readonly> Investigation</h6>
+                                <h6><input type="checkbox" readonly> Nature</h6>
+                                <h6><input type="checkbox" readonly> Religion</h6>
                             </div>
                         </div>
                         <br>
@@ -121,12 +121,12 @@
                                 <label id="wisdom">Wisdom</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
-                                <h6><input type="checkbox"> Animal Handling <u>{{newChar.wisMod}}</u></h6>
-                                <h6><input type="checkbox"> Insight <u>{{newChar.wisMod}}</u></h6>
-                                <h6><input type="checkbox"> Medicine <u>{{newChar.wisMod}}</u></h6>
-                                <h6><input type="checkbox"> Perception <u>{{newChar.wisMod}}</u></h6>
-                                <h6><input type="checkbox"> Survival <u>{{newChar.wisMod}}</u></h6>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
+                                <h6><input type="checkbox" readonly> Animal Handling</h6>
+                                <h6><input type="checkbox" readonly> Insight</h6>
+                                <h6><input type="checkbox" readonly> Medicine</h6>
+                                <h6><input type="checkbox" readonly> Perception</h6>
+                                <h6><input type="checkbox" readonly> Survival</h6>
                             </div>
                         </div>
                         <br>
@@ -137,11 +137,11 @@
                                 <label id="charisma">Charisma</label>
                             </div>
                             <div class="col-md-6 center border-top">
-                                <input type="checkbox"> <label>Saving Throws</label>
-                                <h6><input type="checkbox"> Deception <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
-                                <h6><input type="checkbox"> Intimidation <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
-                                <h6><input type="checkbox"> Performance <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
-                                <h6><input type="checkbox"> Persuasion <span class="ability-score-border">{{newChar.chaMod}}</span></h6>
+                                <input type="checkbox" readonly> <label>Saving Throws</label>
+                                <h6><input type="checkbox" readonly> Deception</h6>
+                                <h6><input type="checkbox" readonly> Intimidation</h6>
+                                <h6><input type="checkbox" readonly> Performance</h6>
+                                <h6><input type="checkbox" readonly> Persuasion</h6>
                             </div>
                         </div>
                         <br>
@@ -156,21 +156,21 @@
             <div class="border-box second-row center">
                 <div class="center ac-row row">
                     <div class="col-md-4 small-border center">
-                        <h4>20</h4>
+                        <h4>{{newChar.ac}}</h4>
                         <label>AC</label>
                     </div>
                     <div class="col-md-4 small-border center">
-                        <h4>20</h4>
+                        <h4>{{newChar.dexMod}}</h4>
                         <label>Initiative</label>
                     </div>
                     <div class="col-md-4 small-border center">
-                        <h4>20</h4>
+                        <h4>{{newChar.speed}}</h4>
                         <label>Speed</label>
                     </div>
                 </div>
                 <br>
                 <div class="border-box">
-                    <h4>20</h4>
+                    <h4>{{newChar.hitPoints}}</h4>
                     <label>Current Hit Points</label>
                 </div>
                 <br>
@@ -182,13 +182,13 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6 small-border">
-                        <h4>20</h4>
+                        <h4>{{newChar.level[0].level}}d{{newChar.damageDice}}</h4>
                         <br>
                         <label>Hit Dice</label>
                     </div>
                     <div id="death-saves" class="col-md-6 small-border">
-                        <h6>successes <input type="checkbox"><input type="checkbox"><input type="checkbox"></h6>
-                        <h6 id="death-fails">failures <input type="checkbox"><input type="checkbox"><input type="checkbox"></h6>
+                        <h6>successes <input type="checkbox" readonly><input type="checkbox" readonly><input type="checkbox" readonly></h6>
+                        <h6 id="death-fails">failures <input type="checkbox" readonly><input type="checkbox" readonly><input type="checkbox" readonly></h6>
                         <label>Death Saves</label>
                     </div>
                 </div>
@@ -217,7 +217,7 @@
                   <label class="label-back">Flaws</label>
                 </div>
             </div>
-            <div class="border-box second-row attacks-features">
+            <div class="border-box second-row attacks-features center">
                 <div class="attacks-equipment small-border">
                   <label class="label-back">Equipment</label>
                 </div>

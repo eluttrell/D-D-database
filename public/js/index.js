@@ -97,9 +97,14 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory, $
     ]
 
     $scope.raceChanged = function() {
-        $scope.subraces = $scope.allSubraces[$scope.selectedRace];
-        let curRace = $scope.selectedRace;
-        newChar.race = $scope.selectedRace;
+        let race = $scope.selectedRace;
+        $scope.subraces = $scope.allSubraces[race];
+        if (race == 'Dwarf' || race == 'Halfling' || race == 'Gnome') {
+          newChar.speed = 25;
+        } else {
+          newChar.speed = 30;
+        }
+        newChar.race = race;
     };
 
     $scope.subraceChanged = function() {
@@ -235,8 +240,27 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory, $
 
     }
 
+    // function getAbilities(class) {
+    //
+    // }
+
+    function getFinalHD(classs) {
+      if (classs == 'Barbarian') {
+        $scope.damageDice = 12;
+      } else if (classs == 'Sorcerer' || classs == 'Wizard') {
+        $scope.damageDice = 6;
+      } else if (classs == 'Fighter' || classs == 'Paladin' || classs == 'Ranger') {
+        $scope. damageDice = 10;
+      } else {
+        $scope.damageDice = 8;
+      }
+      newChar.damageDice = $scope.damageDice;
+      console.log($scope.damageDice);
+    }
+
     $scope.classChanged = function(clazz, loc) {
         $scope.subClassShow = true;
+        let classs = clazz.selectedClass;
         getSubclass(clazz);
         getSubclassNames(clazz);
         if (clazz.selectedClass === 'Fighter') {
@@ -246,6 +270,7 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory, $
         }
         getHitPoints();
         getSaves(clazz);
+        getFinalHD(classs);
     }
 
     $scope.fightStyle = [
@@ -862,6 +887,8 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory, $
         'Plate'
     ];
 
+    $scope.armourStuff = {baseAC : $scope.dexMod};
+
     function getArmour(armour) {
         $scope.armourStuff = $scope.armourTypes[armour];
     }
@@ -1423,6 +1450,9 @@ app.controller('CharacterGenController', function($scope, $state, $RpgFactory, $
       newChar.weight = $scope.charWeight;
       newChar.level = newCharLevels;
       newChar.experience = $scope.charExp;
+      newChar.ac = $scope.armourStuff.baseAC + $scope.dexMod + $scope.shield;
+      newChar.hitPoints = $scope.hitMax;
+      newChar.htiDice = newChar.level[0].level + 'd'
       finalClasses();
       finalSkills();
     }
